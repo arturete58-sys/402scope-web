@@ -95,6 +95,37 @@
     </div>
   </div>
 </section>
+
+<section id="claim">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Claim your endpoint</p><h2>Prove it is yours with a signature</h2></div>
+      <div>
+        <p>Claiming lets you be told when your endpoint crosses a bound, and reply on your record. It never changes how you are measured.</p>
+        <p>Sign a short message with the <code>payTo</code> address your 402 challenge declares. Stellar addresses sign it as a <a href="https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0053.md" target="_blank" rel="noopener">SEP-53</a> Stellar signed message, with any wallet or SDK that supports it; EVM addresses use <code>personal_sign</code>. Your secret key never leaves your machine.</p>
+      </div>
+    </div>
+    <form class="checker" id="claimStart" novalidate>
+      <input id="claimUrl" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://api.example.com/paid-resource" aria-label="Endpoint URL to claim">
+      <button class="btn btn-primary" type="submit">Get the message</button>
+    </form>
+    <div id="claimStep2" hidden>
+      <h3 style="margin-top:28px">1. Sign this exact message</h3>
+      <div class="snippet"><pre id="claimMsg"></pre><button class="btn btn-ghost btn-sm" type="button" data-copy="#claimMsg">Copy</button></div>
+      <p class="muted">With the Stellar SDK, on your own machine:</p>
+<pre>import { Keypair } from '@stellar/stellar-sdk';
+const signature = Keypair.fromSecret(PAYTO_SECRET).signMessage(message).toString('base64');</pre>
+      <h3 style="margin-top:28px">2. Send the signature</h3>
+      <form id="claimSend" class="claim-form" novalidate>
+        <label>payTo address <input id="claimAddr" autocomplete="off" spellcheck="false" placeholder="G… or 0x…"></label>
+        <label>Signature <input id="claimSig" autocomplete="off" spellcheck="false" placeholder="base64 or hex"></label>
+        <label>Alert callback (optional, https) <input id="claimCb" type="url" autocomplete="off" spellcheck="false" placeholder="https://your-service.example/402scope-alerts"></label>
+        <button class="btn btn-primary" type="submit">Claim</button>
+      </form>
+      <div id="claimOut" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
 </main>
 
 <footer>

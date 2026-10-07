@@ -183,7 +183,7 @@
       <div>
         <ul class="list-plain">
           <li><strong>Terms in the 402 challenge.</strong> <code>extensions.declarations</code> states what the seller commits to before payment, such as a maximum data age, and what it does if it breaks that.</li>
-          <li><strong>A declaration per response.</strong> The <code>X-402-Declaration</code> header states the age and source of this response, and the seller’s delivery receipt signs it with the body.</li>
+          <li><strong>A declaration per response.</strong> The <code>X-402-Declaration</code> header states the age and source of this response, and the seller’s delivery receipt signs it with the body, as a <a href="https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0053.md" target="_blank" rel="noopener">SEP-53</a> Stellar signed message any wallet or SDK can check.</li>
           <li><strong>Two tiers.</strong> In-band, <code>usable</code> and <code>providerAtFault</code> let a settlement layer skip or credit one charge. Out-of-band, the observatory’s fault rate bound tells a seller policy when to stop selling a provider that is honest but consistently broken.</li>
           <li><strong>Sellers that never adopt it</strong> are still read through the x402-declarations adapters, labelled as declared or inferred.</li>
         </ul>
@@ -297,6 +297,7 @@ GET  /v1/health                     whether this observatory is working</pre>
       <ul class="list-plain">
         <li><strong>The observation table is append-only.</strong> A database rule prevents modification of historical records. When a rule changes, the change is logged with an explicit scope declaring which observations it invalidates.</li>
         <li><strong>Aggregation has a floor.</strong> Fault rates are published above n=100 with a Wilson interval. Below that the API says so rather than returning a number that cannot be defended.</li>
+        <li><strong>Signatures anyone can check.</strong> Every aggregate is signed by the observatory. Delivery receipts and endpoint claims use <a href="https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0053.md" target="_blank" rel="noopener">SEP-53</a>, Stellar’s standard for signed messages, so they can be checked with any Stellar SDK, without our code. <a href="/badges/#claim">Claim your endpoint</a>.</li>
         <li><strong>Local canaries</strong> with known-bad behaviour run alongside the real panel, so a silent failure of the instrument itself is detectable.</li>
         <li><strong>Nothing is charged to the providers measured.</strong> The observatory has no commercial relationship with any provider in its panel. Scores are never for sale.</li>
       </ul>
