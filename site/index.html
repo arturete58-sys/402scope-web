@@ -244,10 +244,10 @@ if (check.providerAtFault) { /* skip or credit the charge */ }</pre>
       <div class="card">
         <span class="num-badge">Agent tools</span>
         <h3>An MCP tool for your agent</h3>
-        <p>402scope-trust ships an MCP server with <code>check_before_pay</code>, so an agent asks before it pays.</p>
-<pre>{ "mcpServers": { "402scope-trust": {
-    "command": "node",
-    "args": ["/path/to/402scope-trust/dist/cli.js", "mcp"] } } }</pre>
+        <p>Add it to Claude, Cursor or any MCP client. <code>observatory_decision</code> returns sell, sell and warn or hold from the observatory’s measurements, on your thresholds; <code>check_before_pay</code> adds the onchain attestations on Stellar.</p>
+<pre>{ "mcpServers": { "402scope": {
+    "command": "npx",
+    "args": ["-y", "github:arturete58-sys/402scope-trust", "mcp"] } } }</pre>
       </div>
       <div class="card">
         <span class="num-badge">Sellers</span>
