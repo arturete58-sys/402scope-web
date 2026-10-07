@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Badges · 402Scope</title>
+<meta name="description" content="A live badge for any endpoint 402Scope measures: the fault rate upper bound and the sample behind it. Free, automatic, not for sale.">
+<meta property="og:title" content="Badges · 402Scope">
+<meta property="og:description" content="A live badge for any endpoint 402Scope measures: the fault rate upper bound and the sample behind it. Free, automatic, not for sale.">
+<meta property="og:url" content="https://402scope.org/badges/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/ibm-plex-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css">
+<script>
+  // Theme: remembered choice, otherwise the system setting.
+  try { const t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+  document.documentElement.classList.add('js');
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="402Scope, top of page"><span class="brand-mark" aria-hidden="true">402</span>402Scope</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="/#measurement">Measurement</a>
+      <a href="/#trust">Trust</a>
+      <a href="/#declarations">Declarations</a>
+      <a href="/#api">API</a>
+      <a href="/#method">Method</a>
+      <a href="/badges/">Badges</a>
+      <a href="/#open-source">Open source</a>
+    </nav>
+    <div class="tools">
+      <a class="icon-btn" href="https://github.com/arturete58-sys" target="_blank" rel="noopener" aria-label="402Scope on GitHub" title="GitHub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7 3 12l5 5"/><path d="m16 7 5 5-5 5"/><path d="m14 4-4 16"/></svg>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch between light and dark theme" title="Theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<div class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Badges</span>
+    <h1>Show what was measured, not what was claimed</h1>
+    <p class="lede">A live badge for any endpoint in the paid panel. It shows the fault rate upper bound and the sample it rests on, and links to the full record. It updates itself every ten minutes.</p>
+    <p class="lede">Free and automatic. It cannot be bought, earned by contact with the observatory, or switched off for a bad week: it shows the measurement as it is.</p>
+  </div>
+</div>
+
+<section id="make">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Make a badge</p><h2>Your endpoint’s badge</h2></div>
+      <div><p>Paste the URL of a paid x402 endpoint. If it is not measured yet the badge says so, and changes on its own once measurement starts.</p></div>
+    </div>
+    <form class="checker" id="badgeForm" novalidate>
+      <input id="badgeUrl" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://api.example.com/paid-resource" aria-label="Endpoint URL">
+      <button class="btn btn-primary" type="submit">Make badge</button>
+    </form>
+    <div id="badgeOut" hidden>
+      <div class="preview" style="margin-top:20px"><img id="badgeImg" alt="402Scope measurement badge" height="20"><a id="badgePage" href="#">Open the full record</a></div>
+      <h3 style="margin-top:28px">Markdown, for a README</h3>
+      <div class="snippet"><pre id="snipMd"></pre><button class="btn btn-ghost btn-sm" type="button" data-copy="#snipMd">Copy</button></div>
+      <h3 style="margin-top:20px">HTML, for a website</h3>
+      <div class="snippet"><pre id="snipHtml"></pre><button class="btn btn-ghost btn-sm" type="button" data-copy="#snipHtml">Copy</button></div>
+      <h3 style="margin-top:20px">JSON, to build your own</h3>
+      <div class="snippet"><pre id="snipJson"></pre><button class="btn btn-ghost btn-sm" type="button" data-copy="#snipJson">Copy</button></div>
+    </div>
+  </div>
+</section>
+
+<section id="read" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Reading a badge</p><h2>What each state means</h2></div>
+      <div><p>The figure is an upper bound at 95% confidence: the worst fault rate consistent with what has been observed. It is not an estimate. Colour only appears once the sample is large enough to publish (n ≥ 100).</p></div>
+    </div>
+    <div class="badge-legend">
+      <div class="card"><img src="/badges/examples/published.svg" alt="402Scope: fault ≤ 6.0% · n=142"><p>Published, bound under 10%.</p></div>
+      <div class="card"><img src="/badges/examples/published-fair.svg" alt="402Scope: fault ≤ 20.0% · n=300"><p>Published, bound from 10% to 30%.</p></div>
+      <div class="card"><img src="/badges/examples/published-poor.svg" alt="402Scope: fault ≤ 41.0% · n=150"><p>Published, bound above 30%.</p></div>
+      <div class="card"><img src="/badges/examples/provisional.svg" alt="402Scope: provisional · fault ≤ 30.1% · n=34"><p>Provisional: 20 to 99 observations. Enough for a policy, not for a rate.</p></div>
+      <div class="card"><img src="/badges/examples/measuring.svg" alt="402Scope: measuring · n=12"><p>Measuring: fewer than 20 observations.</p></div>
+      <div class="card"><img src="/badges/examples/not-measured.svg" alt="402Scope: not measured"><p>Not in the paid panel yet.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="links">
+      <a href="https://github.com/arturete58-sys" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/arturete58-sys/x402-observatory/issues" target="_blank" rel="noopener">Issues and corrections</a>
+      <a href="/#api">API</a>
+      <a href="/badges/">Badges</a>
+      <span>hello@402scope.org</span>
+    </div>
+    <p>402Scope measures independently. No provider pays for a measurement, a score or a change to one.</p>
+  </div>
+</footer>
+
+
+<script src="/badges.js" defer></script>
+<script src="/theme.js" defer></script>
+</body>
+</html>

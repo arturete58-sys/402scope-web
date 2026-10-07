@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="294" height="20" role="img" aria-label="402Scope: provisional · fault ≤ 30.1% · n=34" viewBox="0 0 294 20">
+<title>402Scope: provisional · fault ≤ 30.1% · n=34</title>
+<clipPath id="r294"><rect width="294" height="20" rx="3"/></clipPath>
+<g clip-path="url(#r294)"><rect width="74" height="20" fill="#1f2937"/><rect x="74" width="220" height="20" fill="#57606a"/></g>
+<g fill="#fff" font-family="Verdana,DejaVu Sans,Geneva,sans-serif" font-size="11" text-rendering="geometricPrecision">
+<text x="37" y="14" text-anchor="middle" textLength="58" lengthAdjust="spacingAndGlyphs">402Scope</text>
+<text x="184" y="14" text-anchor="middle" textLength="204" lengthAdjust="spacingAndGlyphs">provisional · fault ≤ 30.1% · n=34</text>
+</g>
+</svg>

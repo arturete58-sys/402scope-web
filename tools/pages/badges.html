@@ -1,0 +1,48 @@
+<!-- title: Badges · 402Scope | description: A live badge for any endpoint 402Scope measures: the fault rate upper bound and the sample behind it. Free, automatic, not for sale. | script: badges.js -->
+<div class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Badges</span>
+    <h1>Show what was measured, not what was claimed</h1>
+    <p class="lede">A live badge for any endpoint in the paid panel. It shows the fault rate upper bound and the sample it rests on, and links to the full record. It updates itself every ten minutes.</p>
+    <p class="lede">Free and automatic. It cannot be bought, earned by contact with the observatory, or switched off for a bad week: it shows the measurement as it is.</p>
+  </div>
+</div>
+
+<section id="make">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Make a badge</p><h2>Your endpoint’s badge</h2></div>
+      <div><p>Paste the URL of a paid x402 endpoint. If it is not measured yet the badge says so, and changes on its own once measurement starts.</p></div>
+    </div>
+    <form class="checker" id="badgeForm" novalidate>
+      <input id="badgeUrl" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://api.example.com/paid-resource" aria-label="Endpoint URL">
+      <button class="btn btn-primary" type="submit">Make badge</button>
+    </form>
+    <div id="badgeOut" hidden>
+      <div class="preview" style="margin-top:20px"><img id="badgeImg" alt="402Scope measurement badge" height="20"><a id="badgePage" href="#">Open the full record</a></div>
+      <h3 style="margin-top:28px">Markdown, for a README</h3>
+      <div class="snippet"><pre id="snipMd"></pre><button class="btn btn-ghost btn-sm" type="button" data-copy="#snipMd">Copy</button></div>
+      <h3 style="margin-top:20px">HTML, for a website</h3>
+      <div class="snippet"><pre id="snipHtml"></pre><button class="btn btn-ghost btn-sm" type="button" data-copy="#snipHtml">Copy</button></div>
+      <h3 style="margin-top:20px">JSON, to build your own</h3>
+      <div class="snippet"><pre id="snipJson"></pre><button class="btn btn-ghost btn-sm" type="button" data-copy="#snipJson">Copy</button></div>
+    </div>
+  </div>
+</section>
+
+<section id="read" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Reading a badge</p><h2>What each state means</h2></div>
+      <div><p>The figure is an upper bound at 95% confidence: the worst fault rate consistent with what has been observed. It is not an estimate. Colour only appears once the sample is large enough to publish (n ≥ 100).</p></div>
+    </div>
+    <div class="badge-legend">
+      <div class="card"><img src="/badges/examples/published.svg" alt="402Scope: fault ≤ 6.0% · n=142"><p>Published, bound under 10%.</p></div>
+      <div class="card"><img src="/badges/examples/published-fair.svg" alt="402Scope: fault ≤ 20.0% · n=300"><p>Published, bound from 10% to 30%.</p></div>
+      <div class="card"><img src="/badges/examples/published-poor.svg" alt="402Scope: fault ≤ 41.0% · n=150"><p>Published, bound above 30%.</p></div>
+      <div class="card"><img src="/badges/examples/provisional.svg" alt="402Scope: provisional · fault ≤ 30.1% · n=34"><p>Provisional: 20 to 99 observations. Enough for a policy, not for a rate.</p></div>
+      <div class="card"><img src="/badges/examples/measuring.svg" alt="402Scope: measuring · n=12"><p>Measuring: fewer than 20 observations.</p></div>
+      <div class="card"><img src="/badges/examples/not-measured.svg" alt="402Scope: not measured"><p>Not in the paid panel yet.</p></div>
+    </div>
+  </div>
+</section>
