@@ -24,3 +24,9 @@ Si la web la sirve otra carpeta: `TARGET=/ruta/de/la/web bash install.sh`.
 ## Después
 
 Cada commit en `main` se publica solo en 15 minutos como máximo. Para publicar ya: `bash /opt/402scope-web/deploy/update.sh`. Para volver a la versión anterior: `cp -a /opt/402scope-web-backup/. <carpeta publicada>/`.
+
+## Extras (una vez cada uno, como root)
+
+- Distintivos (`/badge.svg`, `/badge.json`): `bash /opt/402scope-web/deploy/install-badge.sh`. Instala un servicio pequeño en 127.0.0.1:3003 que solo lee la API, y añade dos rutas a Caddy (con copia de seguridad y solo si la configuración valida).
+- Informe mensual y RSS: `bash /opt/402scope-web/deploy/install-reports.sh`. Genera la primera edición ya y programa las siguientes el día 1 de cada mes.
+- Páginas de proveedor (`/p/?endpoint=…`) y página de distintivos (`/badges/`): se publican solas con el resto de la web.
