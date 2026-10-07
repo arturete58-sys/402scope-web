@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>402Scope · Independent measurement of x402</title>
+<meta name="description" content="402Scope buys x402 resources and checks whether what arrives matches what the provider declared. Four chains, one method, raw data and every correction public.">
+<meta property="og:title" content="402Scope · Independent measurement of x402">
+<meta property="og:description" content="Does an x402 seller deliver what it declares? Paid measurements, public method, signed results.">
+<meta property="og:url" content="https://402scope.org/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/ibm-plex-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<script>
+  // Theme: remembered choice, otherwise the system setting.
+  try { const t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+  document.documentElement.classList.add('js');
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="402Scope, top of page"><span class="brand-mark" aria-hidden="true">402</span>402Scope</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#measurement">Measurement</a>
+      <a href="#trust">Trust</a>
+      <a href="#declarations">Declarations</a>
+      <a href="#api">API</a>
+      <a href="#method">Method</a>
+      <a href="#open-source">Open source</a>
+    </nav>
+    <div class="tools">
+      <a class="icon-btn" href="https://github.com/arturete58-sys" target="_blank" rel="noopener" aria-label="402Scope on GitHub" title="GitHub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7 3 12l5 5"/><path d="m16 7 5 5-5 5"/><path d="m14 4-4 16"/></svg>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch between light and dark theme" title="Theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Independent x402 observatory</span>
+    <h1>Does an x402 seller deliver what it declares?</h1>
+    <p class="lede">Most x402 measurement counts transactions. 402Scope <strong>buys the resource</strong> and checks whether what arrived matches what the provider said it would deliver.</p>
+    <p class="lede">Four chains, one method. Raw data published with SHA-256 hashes, every observation signed, every correction published.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#check">Check your endpoint
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn btn-ghost" href="https://github.com/arturete58-sys" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7 3 12l5 5"/><path d="m16 7 5 5-5 5"/><path d="m14 4-4 16"/></svg>
+        Code and data on GitHub</a>
+    </div>
+    <div class="figs" id="figs" aria-live="polite">
+      <div class="fig">—<small>endpoints bought</small></div>
+      <div class="fig">—<small>observations in window</small></div>
+      <div class="fig">—<small>publishable</small></div>
+      <div class="fig">4<small>chains indexed</small></div>
+    </div>
+    <p class="figs-note" id="figs-note">Reading live from this site’s own API…</p>
+  </div>
+</div>
+
+<section id="check">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Free check</p><h2>Check your own endpoint</h2></div>
+      <div><p>Requests the 402 challenge once and checks the envelope against rules that each exist because the failure has been observed in the catalogue. No payment is made and no malformed request is sent.</p></div>
+    </div>
+    <form class="checker" id="lintForm" novalidate>
+      <label class="sr" for="lintUrl" hidden>Endpoint URL</label>
+      <input id="lintUrl" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://api.example.com/paid-resource" aria-label="Endpoint URL">
+      <button class="btn btn-primary" id="lintGo" type="submit">Check</button>
+    </form>
+    <div id="lintOut" aria-live="polite"></div>
+  </div>
+</section>
+
+<section id="measurement" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Right now</p><h2>Two ways to count the same month</h2></div>
+      <div><p>Every figure quoted about the size of this ecosystem is a transaction count, because that is what an explorer shows. Counting money gives the opposite picture.</p></div>
+    </div>
+    <div class="slot" id="market"><p class="loading">loading…</p></div>
+  </div>
+</section>
+
+<section id="layers">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Coverage</p><h2>Three layers, not one</h2></div>
+      <div><p>These measure different things and are not interchangeable. Only the first says anything about whether what arrives is correct.</p></div>
+    </div>
+    <div class="slot" id="coverage"><p class="loading">loading…</p></div>
+  </div>
+</section>
+
+<section id="panel-sec" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">The paid panel</p><h2>Bought every two hours, checked against a reference</h2></div>
+      <div><p>Each endpoint is paid for and its response compared with an external reference. The <em>relationship</em> column shows which providers have contact with the observatory and which do not; the method is identical either way.</p></div>
+    </div>
+    <div class="slot" id="panel"><p class="loading">loading…</p></div>
+
+    <div class="sec-head" style="margin-top:56px;margin-bottom:0">
+      <div><h3>What a fault rate upper bound is</h3></div>
+      <div>
+        <p>A provider with no faults in 34 observations has not proven it never fails. The upper bound is the worst fault rate consistent with what has been observed, at 95% confidence (Wilson interval). It is what a policy can sit on while a provider is still new. It is not an estimate of the provider’s rate.</p>
+        <p>Two providers at n=34, one with zero faults and one with five, return bounds of 10.2% and 30.1%. A buyer that holds anything above 15% holds the second from day one.</p>
+      </div>
+    </div>
+    <div class="state-row">
+      <div class="state published"><span class="st st-published">published</span><p>n ≥ 100. Confidence established; the figure can be cited.</p></div>
+      <div class="state provisional"><span class="st st-provisional">provisional</span><p>n from 20 to 99. Low confidence: enough to support a policy, not to publish a rate.</p></div>
+      <div class="state"><span class="st st-insufficient_data">insufficient_data</span><p>n below 20. No rate, but the bound is still returned.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="trust">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">402Scope Trust</p><h2>From a measurement to a payment decision</h2></div>
+      <div>
+        <p>Measurements are only useful if an agent acts on them before it pays. 402Scope Trust puts the scores where the payment is decided: in a Soroban contract on Stellar, and in the agent’s own wallet.</p>
+        <p><span class="status-pill">Running end to end on Stellar testnet</span></p>
+      </div>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <span class="num-badge">01 · Attest</span>
+        <h3>Bonded attesters, onchain</h3>
+        <p>Independent attesters lock a bond, make real paid calls and publish scores per endpoint and per seller in a Soroban registry. Each score commits to a Merkle root of the calls behind it, and the contract checks any call against it. A false score can be slashed.</p>
+      </div>
+      <div class="card">
+        <span class="num-badge">02 · Enforce</span>
+        <h3>A wallet that refuses untrusted sellers</h3>
+        <p>An OpenZeppelin smart account with the 402Scope trust policy checks the seller inside its own authorization. Payments to sellers its chosen attesters do not trust fail to sign, whatever the agent’s code does.</p>
+      </div>
+      <div class="card">
+        <span class="num-badge">03 · Any facilitator</span>
+        <h3>No facilitator lock-in</h3>
+        <p>The agent wallet paid through OpenZeppelin’s hosted Built on Stellar facilitator unchanged. Any x402 facilitator can add trust hooks to flag or refuse payments, rank its Bazaar listing, and share its listing with the observatory.</p>
+      </div>
+    </div>
+    <div class="cta">
+      <a class="btn btn-ghost" href="https://github.com/arturete58-sys/402scope-trust/blob/main/docs/testnet/README.md" target="_blank" rel="noopener">See the latest testnet run, every transaction linked</a>
+      <a class="btn btn-ghost" href="https://github.com/arturete58-sys/402scope-trust" target="_blank" rel="noopener">402scope-trust on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<section id="declarations" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Delivery declarations</p><h2>One vocabulary for what a buyer gets</h2></div>
+      <div>
+        <p>x402 standardised how a seller asks to be paid, not what the buyer receives. 99.84% of resources declare the shape of their response; few declare anything about its quality, and those that do use six incompatible vocabularies.</p>
+        <p>402Scope publishes one: freshness, quality and provenance, carried by x402 itself as an extension. A seller is held only to what it declared, and only a breach of its own declaration is its fault.</p>
+      </div>
+    </div>
+    <div class="split">
+      <div>
+        <ul class="list-plain">
+          <li><strong>Terms in the 402 challenge.</strong> <code>extensions.declarations</code> states what the seller commits to before payment, such as a maximum data age, and what it does if it breaks that.</li>
+          <li><strong>A declaration per response.</strong> The <code>X-402-Declaration</code> header states the age and source of this response, and the seller’s delivery receipt signs it with the body.</li>
+          <li><strong>Two tiers.</strong> In-band, <code>usable</code> and <code>providerAtFault</code> let a settlement layer skip or credit one charge. Out-of-band, the observatory’s fault rate bound tells a seller policy when to stop selling a provider that is honest but consistently broken.</li>
+          <li><strong>Sellers that never adopt it</strong> are still read through the x402-declarations adapters, labelled as declared or inferred.</li>
+        </ul>
+        <div class="cta">
+          <a class="btn btn-ghost" href="https://github.com/arturete58-sys/x402-declarations" target="_blank" rel="noopener">x402-declarations</a>
+          <a class="btn btn-ghost" href="https://github.com/arturete58-sys/402scope-trust/blob/main/docs/declarations.md" target="_blank" rel="noopener">The extension</a>
+        </div>
+      </div>
+<pre aria-label="Example delivery terms in a 402 challenge"><span class="c">// PAYMENT-REQUIRED → extensions</span>
+<span class="k">"declarations"</span>: {
+  <span class="k">"info"</span>: {
+    "version": 1,
+    "freshness": { "maxAgeSeconds": 60, "basis": "live" },
+    "provenance": { "source": "EIA-930", "verifiable": true },
+    "perResponse": true,
+    "onBreach": "refund"
+  }
+}
+
+<span class="c">// paid response</span>
+X-402-Declaration: { "freshness": { "ageSeconds": 12 } }
+X-402-Receipt:     signed by the payTo key,
+                   binds payment, body and declaration</pre>
+    </div>
+  </div>
+</section>
+
+<section id="api">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">API</p><h2>No key, no registration</h2></div>
+      <div><p>60 requests per IP per 5 minutes; a batch of 50 counts as one. Every response that carries a rate carries the bound, n and the window it rests on.</p></div>
+    </div>
+<pre>GET  /v1/provider?endpoint=&lt;url&gt;    signed aggregate for one provider
+POST /v1/providers                  {"endpoints":[...]}, up to 50
+GET  /v1/endpoints                  what is currently measured
+GET  /v1/history?endpoint=&lt;url&gt;     the series, with the rule changes in it
+GET  /v1/coverage                   what is covered, by layer
+POST /v1/verify                     check a third party's signed attestation
+POST /v1/watch                      alert me when a provider crosses a bound
+POST /v1/report                     contribute counts from a facilitator
+GET  /v1/market                     market size, by chain, each with its criterion
+GET  /v1/unused                     endpoints that answer but nobody pays
+GET  /v1/latency                    measured settlement latency, with a suggested timeout
+GET  /v1/health                     whether this observatory is working</pre>
+  </div>
+</section>
+
+<section id="method" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Method</p><h2>Everything is reproducible</h2></div>
+      <div><p>Block ranges, ledger ranges, thresholds and criteria are published. Every figure in a report ships with the query that produces it.</p></div>
+    </div>
+    <div class="split">
+      <ul class="list-plain">
+        <li><strong>The observation table is append-only.</strong> A database rule prevents modification of historical records. When a rule changes, the change is logged with an explicit scope declaring which observations it invalidates.</li>
+        <li><strong>Aggregation has a floor.</strong> Fault rates are published above n=100 with a Wilson interval. Below that the API says so rather than returning a number that cannot be defended.</li>
+        <li><strong>Local canaries</strong> with known-bad behaviour run alongside the real panel, so a silent failure of the instrument itself is detectable.</li>
+        <li><strong>Nothing is charged to the providers measured.</strong> The observatory has no commercial relationship with any provider in its panel. Scores are never for sale.</li>
+      </ul>
+      <ul class="list-plain">
+        <li><strong>Corrections.</strong> Figures later found wrong are corrected in public, including the ones that were more flattering before they were wrong. One correction withdrew a whole table rather than restate it; another was about the correction machinery itself failing. <a href="https://github.com/arturete58-sys/x402-observatory" target="_blank" rel="noopener">All corrections</a>.</li>
+        <li><strong>Right of reply.</strong> Any provider named in any report is contacted before publication and may submit a response, published unedited alongside the data concerning them.</li>
+        <li><strong>Facilitators can contribute.</strong> A facilitator can share its Bazaar listing and the resources it settles, so coverage reaches providers no catalogue lists. Contributions add resources to measure; they never change a result.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="health-sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Self-check</p><h2>Is this instrument working</h2></div>
+      <div><p>Each check below corresponds to a defect that reached production once. They report and do not repair.</p></div>
+    </div>
+    <div class="slot" id="health"><p class="loading">loading…</p></div>
+  </div>
+</section>
+
+<section id="open-source" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Open source</p><h2>Code, data and method on GitHub</h2></div>
+      <div><p>If any figure here is wrong, saying so is useful. It has happened before and the correction was published.</p></div>
+    </div>
+    <div class="grid-3">
+      <a class="card repo" href="https://github.com/arturete58-sys/x402-observatory" target="_blank" rel="noopener">
+        <span class="name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h6"/></svg>x402-observatory</span>
+        <p>Method, raw data with hashes, reports, corrections and issues.</p>
+      </a>
+      <a class="card repo" href="https://github.com/arturete58-sys/402scope-trust" target="_blank" rel="noopener">
+        <span class="name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.4 3.4 8 8 9 4.6-1 8-4.6 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>402scope-trust</span>
+        <p>Soroban contracts, agent wallet policy, receipts, declarations and facilitator hooks. Apache-2.0.</p>
+      </a>
+      <a class="card repo" href="https://github.com/arturete58-sys/x402-declarations" target="_blank" rel="noopener">
+        <span class="name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7 3 12l5 5"/><path d="m16 7 5 5-5 5"/></svg>x402-declarations</span>
+        <p>Call any x402 endpoint from its declared schema and read what the provider says about its data. On npm, MIT.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="links">
+      <a href="https://github.com/arturete58-sys" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/arturete58-sys/x402-observatory/issues" target="_blank" rel="noopener">Issues and corrections</a>
+      <a href="#api">API</a>
+      <span>hello@402scope.org</span>
+    </div>
+    <p>402Scope measures independently. No provider pays for a measurement, a score or a change to one.</p>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
