@@ -18,9 +18,9 @@ const API = arg('api', 'http://127.0.0.1:3002').replace(/\/+$/, '');
 const OUT = arg('out', '/var/www/402scope');
 const SITE = 'https://402scope.org';
 
-const get = async (p) => { const r = await fetch(API + p, { headers: { accept: 'application/json' }, signal: AbortSignal.timeout(60_000) }); if (!r.ok) throw new Error(`${p} → ${r.status}`); return r.json(); };
+const get = async (p, ms = 60_000) => { const r = await fetch(API + p, { headers: { accept: 'application/json' }, signal: AbortSignal.timeout(ms) }); if (!r.ok) throw new Error(`${p} → ${r.status}`); return r.json(); };
 const post = async (p, body) => { const r = await fetch(API + p, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(60_000) }); if (!r.ok) throw new Error(`${p} → ${r.status}`); return r.json(); };
-const opt = async (f) => { try { return await f(); } catch (e) { console.error('optional section skipped:', e.message); return null; } };
+const opt = async (f) => { try { return await f(); } catch (e) { console.error('optional section skipped:', e.message.includes('timeout') ? 'timed out' : e.message); return null; } };
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const num = (n) => (n == null ? '—' : Number(n).toLocaleString('en'));
 const pct = (v) => (v == null ? '—' : `${(v * 100).toFixed(1)}%`);
@@ -37,8 +37,8 @@ const list = (eps.endpoints ?? []).map((e) => e.endpoint);
 const results = [];
 for (let i = 0; i < list.length; i += 50) results.push(...((await post('/v1/providers', { endpoints: list.slice(i, i + 50) })).results ?? []));
 const byEp = new Map(results.map((r) => [r.endpoint, r]));
-const coverage = await opt(() => get('/v1/coverage'));
-const market = await opt(() => get('/v1/market'));
+const coverage = await opt(() => get('/v1/coverage', 300_000));
+const market = await opt(() => get('/v1/market', 300_000));
 const health = await opt(() => get('/v1/health'));
 
 const panel = (eps.endpoints ?? []).map((e) => {
