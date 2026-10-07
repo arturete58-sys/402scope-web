@@ -14,11 +14,11 @@ on:
 jobs:
   live:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm i --no-save playwright@1.56.0 && npx playwright install --with-deps chromium
+      - run: npm i --no-save playwright@1.56.0
       - run: node tests/live-smoke.mjs

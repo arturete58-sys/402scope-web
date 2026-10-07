@@ -15,7 +15,8 @@ const srv = http.createServer((q, s) => {
   fs.createReadStream(p).pipe(s);
 }).listen(8765);
 
-const browser = await chromium.launch();
+// GitHub's Ubuntu runners ship Google Chrome; no browser download needed.
+const browser = await chromium.launch({ channel: process.env.CI ? 'chrome' : undefined });
 const page = await browser.newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
