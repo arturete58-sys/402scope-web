@@ -1,0 +1,56 @@
+<!-- title: Provider record · 402Scope | description: The full 402Scope record for one x402 endpoint: fault rate upper bound over time, sample, liveness and the signed aggregate. | script: provider.js -->
+<div class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Provider record</span>
+    <h1 id="pTitle" class="mono-title">Loading…</h1>
+    <p class="lede" id="pLede">Reading the signed aggregate for this endpoint from the observatory’s API.</p>
+    <div class="figs" id="pFigs" aria-live="polite"></div>
+    <p class="figs-note" id="pNote"></p>
+  </div>
+</div>
+
+<section id="series">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Over time</p><h2>Fault rate upper bound</h2></div>
+      <div><p>The worst fault rate consistent with what has been observed, at 95% confidence, as each daily aggregate was issued and signed. A falling line can mean fewer faults or simply a larger sample: n is shown on hover so the two can be told apart. Dashed lines mark rule changes.</p></div>
+    </div>
+    <div id="chart" class="chart-box"><p class="loading">loading…</p></div>
+    <details class="table-toggle"><summary>Show as a table</summary><div id="seriesTable"></div></details>
+  </div>
+</section>
+
+<section id="details" class="alt">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <p class="kicker">Liveness</p>
+        <h3>Does it still answer and charge?</h3>
+        <div id="liveness"><p class="loading">loading…</p></div>
+      </div>
+      <div>
+        <p class="kicker">Signature</p>
+        <h3>Check it yourself</h3>
+        <div id="sig"><p class="loading">loading…</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="badge-sec">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <p class="kicker">Badge</p>
+        <h3>Show this record</h3>
+        <p class="muted">A live badge for a README or website, linked to this page. It cannot be bought.</p>
+        <p id="pBadge" style="margin-top:14px"></p>
+      </div>
+      <div>
+        <p class="kicker">Right of reply</p>
+        <h3>Are you this provider?</h3>
+        <p class="muted">You can submit a response, published unedited alongside this record, or point out an error. Write to hello@402scope.org. Contact with the observatory never changes a measurement.</p>
+      </div>
+    </div>
+  </div>
+</section>

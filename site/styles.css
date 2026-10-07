@@ -24,6 +24,7 @@
   --muted: #6b7280;
   --code-bg: #f0eee7;
   --shadow: 0 1px 0 rgba(17, 24, 39, 0.04);
+  --chart-line: #a15c07;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
@@ -31,14 +32,14 @@
     --bg: #0b1220; --bg-2: #0f1828; --card: #111b2d; --fg: #eef2f7; --fg-2: #a5b1c2;
     --line: #1f2b40; --line-2: #2c3a52; --accent: #f5a524; --accent-strong: #fbbf24;
     --accent-soft: rgba(245, 165, 36, 0.10); --ok: #34d399; --warn: #f5a524; --bad: #f87171;
-    --muted: #8391a7; --code-bg: #0e1726; --shadow: none; color-scheme: dark;
+    --muted: #8391a7; --code-bg: #0e1726; --shadow: none; --chart-line: #c7800f; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0b1220; --bg-2: #0f1828; --card: #111b2d; --fg: #eef2f7; --fg-2: #a5b1c2;
   --line: #1f2b40; --line-2: #2c3a52; --accent: #f5a524; --accent-strong: #fbbf24;
   --accent-soft: rgba(245, 165, 36, 0.10); --ok: #34d399; --warn: #f5a524; --bad: #f87171;
-  --muted: #8391a7; --code-bg: #0e1726; --shadow: none; color-scheme: dark;
+  --muted: #8391a7; --code-bg: #0e1726; --shadow: none; --chart-line: #c7800f; color-scheme: dark;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -194,3 +195,39 @@ button, input { font: inherit; }
 .badge-legend img { display: block; margin-bottom: 6px; max-width: 100%; height: 20px; }
 .btn-ghost { background: transparent; }
 .badge-legend img { height: auto; }
+
+/* Decision */
+.policy { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; margin-top: 14px; font-size: 15px; color: var(--fg-2); }
+.policy input { width: 64px; height: 34px; margin-inline: 6px; padding-inline: 8px; border: 1px solid var(--line-2); border-radius: 6px; background: var(--card); color: var(--fg); font-family: "Plex Mono", monospace; }
+.decision { margin-top: 22px; border: 1px solid var(--line); border-left-width: 4px; border-radius: 10px; padding: 18px 20px; background: var(--card); }
+.decision-head { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; }
+.decision-label { font-size: 24px; font-weight: 600; letter-spacing: -0.01em; }
+.decision ul { margin: 12px 0 0; padding-left: 18px; color: var(--fg-2); }
+.decision li + li { margin-top: 4px; }
+.decision-links { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 14px; font-size: 15px; }
+.decision-sell { border-left-color: var(--ok); } .decision-sell .decision-label { color: var(--ok); }
+.decision-warn { border-left-color: var(--warn); } .decision-warn .decision-label { color: var(--warn); }
+.decision-hold { border-left-color: var(--bad); } .decision-hold .decision-label { color: var(--bad); }
+.decision-unmeasured { border-left-color: var(--line-2); }
+
+/* Build with it */
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 860px) { .grid-2 { grid-template-columns: 1fr; } }
+.card pre { margin-top: 12px; font-size: 12.5px; white-space: pre; }
+
+/* Provider record */
+.mono-title { font-family: "Plex Mono", monospace; font-weight: 500; font-size: clamp(24px, 4vw, 40px); letter-spacing: -0.01em; word-break: break-all; max-width: none; }
+.chart-box { position: relative; border: 1px solid var(--line); border-radius: 10px; background: var(--card); padding: 12px 8px 4px; }
+.chart { display: block; width: 100%; height: auto; }
+.chart .grid line { stroke: var(--line); stroke-width: 1; }
+.chart .axis-text text { fill: var(--muted); font: 12px "Plex Mono", monospace; }
+.chart .series { fill: none; stroke: var(--chart-line); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.chart .rule-marks line { stroke: var(--line-2); stroke-dasharray: 4 4; }
+.chart .rule-marks text { fill: var(--muted); font: 11px "Plex Sans", sans-serif; }
+.chart .crosshair { stroke: var(--line-2); stroke-width: 1; }
+.chart .hover-dot { fill: var(--chart-line); stroke: var(--card); stroke-width: 2; }
+.tip { position: absolute; pointer-events: none; min-width: 150px; background: var(--card); border: 1px solid var(--line-2); border-radius: 8px; padding: 8px 10px; font-size: 13px; line-height: 1.45; box-shadow: 0 4px 16px rgba(0,0,0,.18); }
+.table-toggle { margin-top: 14px; }
+.table-toggle summary { cursor: pointer; color: var(--fg-2); font-size: 15px; }
+.table-toggle .table-wrap { margin-top: 10px; }
+td.ep a { text-decoration: none; } td.ep a:hover { text-decoration: underline; }

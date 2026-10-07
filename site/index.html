@@ -29,6 +29,7 @@
       <a href="#measurement">Measurement</a>
       <a href="#trust">Trust</a>
       <a href="#declarations">Declarations</a>
+      <a href="#build">Build</a>
       <a href="#api">API</a>
       <a href="#method">Method</a>
       <a href="/badges/">Badges</a>
@@ -73,14 +74,21 @@
 <section id="check">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="kicker">Free check</p><h2>Check your own endpoint</h2></div>
-      <div><p>Requests the 402 challenge once and checks the envelope against rules that each exist because the failure has been observed in the catalogue. No payment is made and no malformed request is sent.</p></div>
+      <div><p class="kicker">Free check</p><h2>Should an agent pay this endpoint?</h2></div>
+      <div>
+        <p>Paste an endpoint and get a decision: <strong>sell</strong>, <strong>sell and warn</strong> or <strong>hold</strong>, with the reasons. It reads the paid measurements behind the endpoint and checks its 402 challenge. No payment is made and no malformed request is sent.</p>
+        <p>The decision follows a seller policy set on the fault rate upper bound. Adjust the two thresholds to your own tolerance.</p>
+      </div>
     </div>
     <form class="checker" id="lintForm" novalidate>
-      <label class="sr" for="lintUrl" hidden>Endpoint URL</label>
       <input id="lintUrl" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://api.example.com/paid-resource" aria-label="Endpoint URL">
       <button class="btn btn-primary" id="lintGo" type="submit">Check</button>
     </form>
+    <div class="policy" role="group" aria-label="Your policy">
+      <span class="muted">Your policy:</span>
+      <label>warn above <input id="warnMax" type="number" min="1" max="99" step="1" value="15" inputmode="numeric">%</label>
+      <label>hold above <input id="holdMax" type="number" min="1" max="100" step="1" value="30" inputmode="numeric">%</label>
+    </div>
     <div id="lintOut" aria-live="polite"></div>
   </div>
 </section>
@@ -202,7 +210,62 @@ X-402-Receipt:     signed by the payTo key,
   </div>
 </section>
 
-<section id="api">
+<section id="build">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Build with it</p><h2>Start in one minute</h2></div>
+      <div><p>Everything below works today, without a key or registration, from an agent, a wallet, a facilitator or a seller’s own site.</p></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <span class="num-badge">Agents</span>
+        <h3>Ask before you pay</h3>
+        <p>One call returns the signed aggregate for an endpoint: state, fault rate upper bound, sample and signature.</p>
+<pre>curl "https://402scope.org/v1/provider?endpoint=https://api.example.com/x"</pre>
+      </div>
+      <div class="card">
+        <span class="num-badge">Wallets and catalogues</span>
+        <h3>Check a whole catalogue</h3>
+        <p>Up to 50 endpoints in one request, counted as one against the rate limit.</p>
+<pre>curl -X POST https://402scope.org/v1/providers \
+  -H 'content-type: application/json' \
+  -d '{"endpoints":["https://a.example/x","https://b.example/y"]}'</pre>
+      </div>
+      <div class="card">
+        <span class="num-badge">Buyers</span>
+        <h3>Read what the seller declares</h3>
+        <p>Normalise freshness, quality and provenance from any provider, and know whether a bad response is the provider’s fault.</p>
+<pre>npm install x402-declarations
+
+const { normalize, isUsable } = require('x402-declarations');
+const check = isUsable(normalize(url, body), { maxAgeSeconds: 60 });
+if (check.providerAtFault) { /* skip or credit the charge */ }</pre>
+      </div>
+      <div class="card">
+        <span class="num-badge">Agent tools</span>
+        <h3>An MCP tool for your agent</h3>
+        <p>402scope-trust ships an MCP server with <code>check_before_pay</code>, so an agent asks before it pays.</p>
+<pre>{ "mcpServers": { "402scope-trust": {
+    "command": "node",
+    "args": ["/path/to/402scope-trust/dist/cli.js", "mcp"] } } }</pre>
+      </div>
+      <div class="card">
+        <span class="num-badge">Sellers</span>
+        <h3>Show your measurement</h3>
+        <p>A live badge for your README or website, linked to your full record. Free, and it cannot be bought.</p>
+        <a class="more" href="/badges/">Make your badge</a>
+      </div>
+      <div class="card">
+        <span class="num-badge">Facilitators and settlement layers</span>
+        <h3>Get told when a provider degrades</h3>
+        <p>Register a watch on an endpoint and a bound; you get a callback when it crosses. Facilitators can also contribute counts and their Bazaar listing. Ask for a reporter key at hello@402scope.org.</p>
+<pre>POST /v1/watch   {"endpoint": "...", "boundAbove": 0.15, "callbackUrl": "..."}</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="api" class="alt">
   <div class="wrap">
     <div class="sec-head">
       <div><p class="kicker">API</p><h2>No key, no registration</h2></div>
@@ -223,7 +286,7 @@ GET  /v1/health                     whether this observatory is working</pre>
   </div>
 </section>
 
-<section id="method" class="alt">
+<section id="method">
   <div class="wrap">
     <div class="sec-head">
       <div><p class="kicker">Method</p><h2>Everything is reproducible</h2></div>
@@ -245,7 +308,7 @@ GET  /v1/health                     whether this observatory is working</pre>
   </div>
 </section>
 
-<section id="health-sec">
+<section id="health-sec" class="alt">
   <div class="wrap">
     <div class="sec-head">
       <div><p class="kicker">Self-check</p><h2>Is this instrument working</h2></div>
@@ -255,7 +318,7 @@ GET  /v1/health                     whether this observatory is working</pre>
   </div>
 </section>
 
-<section id="open-source" class="alt">
+<section id="open-source">
   <div class="wrap">
     <div class="sec-head">
       <div><p class="kicker">Open source</p><h2>Code, data and method on GitHub</h2></div>

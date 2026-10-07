@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Provider record · 402Scope</title>
+<meta name="description" content="The full 402Scope record for one x402 endpoint: fault rate upper bound over time, sample, liveness and the signed aggregate.">
+<meta property="og:title" content="Provider record · 402Scope">
+<meta property="og:description" content="The full 402Scope record for one x402 endpoint: fault rate upper bound over time, sample, liveness and the signed aggregate.">
+<meta property="og:url" content="https://402scope.org/p/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/ibm-plex-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css">
+<script>
+  // Theme: remembered choice, otherwise the system setting.
+  try { const t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+  document.documentElement.classList.add('js');
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="402Scope, top of page"><span class="brand-mark" aria-hidden="true">402</span>402Scope</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="/#measurement">Measurement</a>
+      <a href="/#trust">Trust</a>
+      <a href="/#declarations">Declarations</a>
+      <a href="/#build">Build</a>
+      <a href="/#api">API</a>
+      <a href="/#method">Method</a>
+      <a href="/badges/">Badges</a>
+      <a href="/#open-source">Open source</a>
+    </nav>
+    <div class="tools">
+      <a class="icon-btn" href="https://github.com/arturete58-sys" target="_blank" rel="noopener" aria-label="402Scope on GitHub" title="GitHub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7 3 12l5 5"/><path d="m16 7 5 5-5 5"/><path d="m14 4-4 16"/></svg>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch between light and dark theme" title="Theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<div class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Provider record</span>
+    <h1 id="pTitle" class="mono-title">Loading…</h1>
+    <p class="lede" id="pLede">Reading the signed aggregate for this endpoint from the observatory’s API.</p>
+    <div class="figs" id="pFigs" aria-live="polite"></div>
+    <p class="figs-note" id="pNote"></p>
+  </div>
+</div>
+
+<section id="series">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Over time</p><h2>Fault rate upper bound</h2></div>
+      <div><p>The worst fault rate consistent with what has been observed, at 95% confidence, as each daily aggregate was issued and signed. A falling line can mean fewer faults or simply a larger sample: n is shown on hover so the two can be told apart. Dashed lines mark rule changes.</p></div>
+    </div>
+    <div id="chart" class="chart-box"><p class="loading">loading…</p></div>
+    <details class="table-toggle"><summary>Show as a table</summary><div id="seriesTable"></div></details>
+  </div>
+</section>
+
+<section id="details" class="alt">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <p class="kicker">Liveness</p>
+        <h3>Does it still answer and charge?</h3>
+        <div id="liveness"><p class="loading">loading…</p></div>
+      </div>
+      <div>
+        <p class="kicker">Signature</p>
+        <h3>Check it yourself</h3>
+        <div id="sig"><p class="loading">loading…</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="badge-sec">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <p class="kicker">Badge</p>
+        <h3>Show this record</h3>
+        <p class="muted">A live badge for a README or website, linked to this page. It cannot be bought.</p>
+        <p id="pBadge" style="margin-top:14px"></p>
+      </div>
+      <div>
+        <p class="kicker">Right of reply</p>
+        <h3>Are you this provider?</h3>
+        <p class="muted">You can submit a response, published unedited alongside this record, or point out an error. Write to hello@402scope.org. Contact with the observatory never changes a measurement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="links">
+      <a href="https://github.com/arturete58-sys" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/arturete58-sys/x402-observatory/issues" target="_blank" rel="noopener">Issues and corrections</a>
+      <a href="/#api">API</a>
+      <a href="/badges/">Badges</a>
+      <span>hello@402scope.org</span>
+    </div>
+    <p>402Scope measures independently. No provider pays for a measurement, a score or a change to one.</p>
+  </div>
+</footer>
+
+
+<script src="/provider.js" defer></script>
+<script src="/theme.js" defer></script>
+</body>
+</html>
