@@ -34,7 +34,7 @@
   const CONTRACTS = [
     ['registry', 'Attestation registry', 'Attester bonds, signed scores per endpoint and per seller, evidence roots'],
     ['policy', 'Trust policy', 'OpenZeppelin smart-account policy: pay only sellers the chosen attesters trust'],
-    ['spendingLimit', 'Spending limit', 'OpenZeppelin policy: at most an amount in any rolling window'],
+    ['spendingLimit', 'Spending limit', 'Smart-account policy: at most an amount in any rolling window'],
     ['wallet', 'Agent wallet', 'Smart account with the trust policy'],
     ['budgetWallet', 'Budgeted agent wallet', 'Smart account with the trust policy and a daily spending limit'],
     ['verifier', 'Ed25519 verifier', 'Checks the agent key’s signatures for both wallets'],
@@ -59,6 +59,11 @@
     if (a === 'scope_policy') {
       if (b === 'installed') return ['policy', 'Trust policy set', `${who(t[2])}: score ≥ ${esc(v.params?.min_score)} from ${esc(v.params?.quorum)} of ${esc(v.params?.attesters?.length)} attesters`];
       if (b === 'uninstalled') return ['policy', 'Trust policy removed', `${who(t[2])}`];
+    }
+    if (a === 'scope_limit') {
+      if (b === 'installed') return ['policy', 'Budget set', `${who(t[2])}: at most ${amount(v.spending_limit)} per ${Number(v.period_ledgers).toLocaleString('en')} ledgers (about ${Math.round(v.period_ledgers / 720)} h)`];
+      if (b === 'changed') return ['policy', 'Budget changed', `${who(t[2])}: at most ${amount(v.spending_limit)}`];
+      if (b === 'uninstalled') return ['policy', 'Budget removed', `${who(t[2])}`];
     }
     if (a === 'transfer') return ['payment', 'Payment', `${who(t[1])} → ${who(t[2])} · ${amount(v)}`];
     if (a === 'mint') return ['setup', 'Funded', `${who(t.length > 3 ? t[2] : t[1])} · ${amount(v)}`];
