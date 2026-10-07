@@ -100,9 +100,14 @@
     const ours = ['registry', 'policy', 'spendingLimit', 'wallet', 'budgetWallet'].map((k) => c[k]).filter(Boolean);
     const filters = [{ type: 'contract', contractIds: ours.slice(0, 5) }];
     if (c.token) filters.push({ type: 'contract', contractIds: [c.token] });
+    // Start shortly before the run (ledgers close every ~5-6 s; 5 s errs on the early side),
+    // since the RPC scans a limited range of ledgers per request.
+    const since = latest.startedAt ? (Date.now() - new Date(latest.startedAt)) / 1000 : Infinity;
+    const start = Math.max(health.oldestLedger, health.latestLedger - Math.ceil(since / 5) - 720);
     const out = [];
-    let req = { startLedger: health.oldestLedger, filters, limit: 200 };
-    for (let page = 0; page < 10; page++) {
+    let req = { startLedger: start, filters, limit: 200 };
+    let seen = false;
+    for (let page = 0; page < 40; page++) {
       const res = await server.getEvents(req);
       for (const ev of res.events) {
         let t, v;
@@ -113,7 +118,9 @@
         const [kind, title, text] = describe(t, v);
         out.push({ kind, title, text, at: ev.ledgerClosedAt, ledger: ev.ledger, tx: ev.txHash, contract: String(ev.contractId?.contractId?.() ?? ev.contractId), id: ev.id });
       }
-      if (res.events.length < 200 || !res.cursor) break;
+      if (res.events.length) seen = true;
+      else if (seen) break; // past the run
+      if (!res.cursor || res.cursor === req.cursor) break;
       req = { filters, limit: 200, cursor: res.cursor };
     }
     return { out, health };
