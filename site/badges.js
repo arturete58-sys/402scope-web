@@ -53,6 +53,49 @@
       $('claimOut').innerHTML = '';
     } catch { $('claimOut').innerHTML = '<p class="err">The observatory API is not responding right now.</p>'; $('claimStep2').hidden = false; }
   });
+  // Sign with a browser wallet (Stellar Wallets Kit). Wallets return the
+  // signature in base64 or hex; it is checked here as SEP-53 before it is sent.
+  const toBytes = (sig) => {
+    if (sig && typeof sig === 'object' && Array.isArray(sig.data)) return new Uint8Array(sig.data);
+    if (sig instanceof Uint8Array) return sig;
+    const s = String(sig || '').trim();
+    if (/^(0x)?[0-9a-f]{128}$/i.test(s)) return Uint8Array.from(s.replace(/^0x/, '').match(/../g).map((h) => parseInt(h, 16)));
+    try { return Uint8Array.from(atob(s), (c) => c.charCodeAt(0)); } catch { return new Uint8Array(); }
+  };
+  const b64 = (bytes) => btoa(String.fromCharCode(...bytes));
+  let kitReady = false;
+  $('walletSign')?.addEventListener('click', async () => {
+    const out = $('walletOut');
+    const W = window.ScopeWallets;
+    const sdk = window.StellarSdk;
+    if (!claim || !W || !sdk) { out.innerHTML = '<p class="err">The wallet kit did not load. Use the SDK snippet below.</p>'; return; }
+    try {
+      if (!kitReady) {
+        const dark = document.documentElement.dataset.theme === 'dark' || (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+        W.StellarWalletsKit.init({ modules: W.defaultModules({ filterBy: (m) => m.productId !== 'albedo' }), network: W.Networks.PUBLIC, theme: dark ? W.SwkAppDarkTheme : W.SwkAppLightTheme });
+        kitReady = true;
+      }
+      out.innerHTML = '<p class="loading">choose your wallet…</p>';
+      const { address } = await W.StellarWalletsKit.authModal();
+      out.innerHTML = `<p class="loading">sign the message in your wallet (${esc(address.slice(0, 6))}…)</p>`;
+      const res = await W.StellarWalletsKit.signMessage(claim.message, { address, networkPassphrase: W.Networks.PUBLIC });
+      const sig = toBytes(res && (res.signedMessage ?? res.signature ?? res));
+      const signer = (res && res.signerAddress) || address;
+      let ok = false;
+      try { ok = sig.length === 64 && sdk.Keypair.fromPublicKey(signer).verifyMessage(claim.message, sig); } catch { ok = false; }
+      if (!ok) {
+        out.innerHTML = '<p class="err">Your wallet returned a signature that is not a SEP-53 Stellar signed message for this address, so the observatory would reject it. Some wallets still use an older format. Sign with the SDK snippet below instead.</p>';
+        return;
+      }
+      $('claimAddr').value = signer;
+      $('claimSig').value = b64(sig);
+      out.innerHTML = `<p class="muted">Signed by <code>${esc(signer)}</code> and checked as SEP-53. Add an alert callback if you want one, then press Claim.</p>`;
+      $('claimSend').querySelector('button[type="submit"]').focus();
+    } catch (e) {
+      const msg = (e && (e.message || e.code)) || String(e);
+      out.innerHTML = /closed the modal/.test(msg) ? '' : `<p class="err">${esc(msg)}</p>`;
+    }
+  });
   $('claimSend').addEventListener('submit', async (ev) => {
     ev.preventDefault();
     if (!claim) return;

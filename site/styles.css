@@ -254,3 +254,6 @@ td.ep a { text-decoration: none; } td.ep a:hover { text-decoration: underline; }
 .kind-policy { color: var(--fg-2); }
 #feedBody td:nth-child(3) { min-width: 260px; }
 #feedBody td:nth-child(2), #feedBody td:nth-child(4) { white-space: nowrap; }
+.wallet-sign { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin-top: 16px; }
+.wallet-sign .muted { margin: 0; flex: 1 1 320px; }
+#walletOut { margin-top: 8px; }
