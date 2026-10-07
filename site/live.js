@@ -62,7 +62,7 @@
     }
     if (a === 'scope_limit') {
       if (b === 'installed') return ['policy', 'Budget set', `${who(t[2])}: at most ${amount(v.spending_limit)} per ${Number(v.period_ledgers).toLocaleString('en')} ledgers (about ${Math.round(v.period_ledgers / 720)} h)`];
-      if (b === 'changed') return ['policy', 'Budget changed', `${who(t[2])}: at most ${amount(v.spending_limit)}`];
+      if (b === 'changed') return ['policy', 'Budget changed', `${who(t[2])}: at most ${amount(v.spending_limit)} now, signed by the owner`];
       if (b === 'uninstalled') return ['policy', 'Budget removed', `${who(t[2])}`];
     }
     if (a === 'transfer') return ['payment', 'Payment', `${who(t[1])} → ${who(t[2])} · ${amount(v)}`];
