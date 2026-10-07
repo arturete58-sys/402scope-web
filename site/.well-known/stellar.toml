@@ -1,0 +1,16 @@
+# 402Scope · Stellar Info File (SEP-1)
+# https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0001.md
+
+VERSION = "2.7.0"
+NETWORK_PASSPHRASE = "Public Global Stellar Network ; September 2015"
+
+# Stellar accounts operated by 402Scope. Each also sets home_domain = "402scope.org",
+# so the link can be checked both ways (see 402scope-trust: attesterIdentity).
+# ACCOUNTS = []
+
+[DOCUMENTATION]
+ORG_NAME = "402Scope"
+ORG_URL = "https://402scope.org"
+ORG_DESCRIPTION = "Independent observatory of the x402 agentic payments protocol. It buys paid resources and checks whether what arrives matches what the provider declared. No provider pays for a measurement or a score."
+ORG_OFFICIAL_EMAIL = "hello@402scope.org"
+ORG_GITHUB = "arturete58-sys"

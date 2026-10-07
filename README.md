@@ -29,4 +29,5 @@ Cada commit en `main` se publica solo en 15 minutos como máximo. Para publicar 
 
 - Distintivos (`/badge.svg`, `/badge.json`): `bash /opt/402scope-web/deploy/install-badge.sh`. Instala un servicio pequeño en 127.0.0.1:3003 que solo lee la API, y añade dos rutas a Caddy (con copia de seguridad y solo si la configuración valida).
 - Informe mensual y RSS: `bash /opt/402scope-web/deploy/install-reports.sh`. Genera la primera edición ya y programa las siguientes el día 1 de cada mes.
+- stellar.toml (SEP-1) servido como exige el estándar: `bash /opt/402scope-web/deploy/install-stellar-toml.sh`. Añade tres líneas a Caddy para `/.well-known/stellar.toml` (CORS y texto plano), con copia y validación.
 - Páginas de proveedor (`/p/?endpoint=…`) y página de distintivos (`/badges/`): se publican solas con el resto de la web.
