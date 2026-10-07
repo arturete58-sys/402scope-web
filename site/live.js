@@ -38,6 +38,7 @@
     ['wallet', 'Agent wallet', 'Smart account with the trust policy'],
     ['budgetWallet', 'Budgeted agent wallet', 'Smart account with the trust policy and a daily spending limit'],
     ['verifier', 'Ed25519 verifier', 'Checks the agent key’s signatures for both wallets'],
+    ['webauthnVerifier', 'Passkey verifier', 'Checks the owner’s passkey (WebAuthn) signatures'],
     ['token', 'SCOPE test token', 'SEP-41 token the demo pays and bonds in'],
   ];
   const ACCOUNTS = {
