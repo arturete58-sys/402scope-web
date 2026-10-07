@@ -236,3 +236,21 @@ td.ep a { text-decoration: none; } td.ep a:hover { text-decoration: underline; }
 .claim-form input { height: 44px; padding-inline: 12px; border: 1px solid var(--line-2); border-radius: 8px; background: var(--card); color: var(--fg); font: 400 14px "Plex Mono", monospace; min-width: 0; }
 .claim-form .btn { justify-self: start; }
 #claimOut { margin-top: 16px; }
+
+/* Live onchain feed */
+.mono { font-family: "Plex Mono", monospace; font-size: 0.92em; }
+.live-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 20px; }
+@media (max-width: 760px) { .live-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.live-stat { display: grid; gap: 2px; border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; background: var(--card); }
+.live-num { font: 500 28px/1.1 "Plex Mono", monospace; font-variant-numeric: tabular-nums; color: var(--fg); }
+.live-filter { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
+.live-filter #refresh { margin-left: auto; }
+.chip { height: 34px; padding-inline: 14px; border: 1px solid var(--line-2); border-radius: 999px; background: transparent; color: var(--fg-2); font: 500 13.5px "Plex Sans", system-ui, sans-serif; cursor: pointer; }
+.chip:hover { border-color: var(--accent); color: var(--fg); }
+.chip.is-on { background: var(--accent-soft); border-color: var(--accent); color: var(--fg); }
+.kind { display: inline-block; min-width: 64px; margin-right: 6px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line-2); font: 500 11.5px/1.5 "Plex Mono", monospace; text-transform: uppercase; letter-spacing: 0.04em; text-align: center; color: var(--muted); }
+.kind-payment { color: var(--ok); border-color: var(--ok); }
+.kind-score { color: var(--accent); border-color: var(--accent); }
+.kind-policy { color: var(--fg-2); }
+#feedBody td:nth-child(3) { min-width: 260px; }
+#feedBody td:nth-child(2), #feedBody td:nth-child(4) { white-space: nowrap; }

@@ -1,0 +1,24 @@
+name: Live page check
+
+# Opens 402scope.org/live in a real browser against the public Stellar testnet
+# RPC, daily after the testnet demo run, and on changes to the page.
+
+on:
+  push:
+    branches: [main]
+    paths: ['site/live.js', 'site/live/**', 'site/vendor/**', 'tests/live-smoke.mjs', '.github/workflows/live-smoke.yml']
+  schedule:
+    - cron: '47 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save playwright@1.56.0 && npx playwright install --with-deps chromium
+      - run: node tests/live-smoke.mjs

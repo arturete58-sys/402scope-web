@@ -1,0 +1,70 @@
+<!-- title: Live onchain · 402Scope | description: Events from the 402Scope Trust contracts on Stellar testnet, read in your browser straight from a public Stellar RPC: bonds, scores, payments and budgets. | script: live.js -->
+<div class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Live · Stellar testnet</span>
+    <h1>What the contracts did, as it happened</h1>
+    <p class="lede">Attesters lock a bond, write scores onchain, and agent wallets pay only the sellers those scores trust, within a budget. This page reads those events in your browser, straight from a public Stellar RPC. No server of ours sits in between.</p>
+    <p class="lede">The contracts are redeployed every day by an open workflow that runs the whole flow with real testnet payments. Testnet tokens have no value.</p>
+  </div>
+</div>
+
+<section id="feed">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Event feed</p><h2>Onchain events</h2></div>
+      <div>
+        <p id="runLine" class="loading">Loading the latest run…</p>
+        <p class="muted" id="rpcLine"></p>
+      </div>
+    </div>
+    <div class="live-stats" id="stats" hidden></div>
+    <div class="live-filter" id="filters" hidden role="group" aria-label="Filter events">
+      <button type="button" class="chip is-on" data-kind="all">All</button>
+      <button type="button" class="chip" data-kind="payment">Payments</button>
+      <button type="button" class="chip" data-kind="score">Scores</button>
+      <button type="button" class="chip" data-kind="bond">Bonds</button>
+      <button type="button" class="chip" data-kind="policy">Policies and budgets</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="refresh">Refresh</button>
+    </div>
+    <div class="table-wrap" id="feedWrap" hidden>
+      <table>
+        <thead><tr><th>When</th><th>Event</th><th>What happened</th><th>Contract</th><th>Transaction</th></tr></thead>
+        <tbody id="feedBody"></tbody>
+      </table>
+    </div>
+    <p class="muted" id="feedNote"></p>
+  </div>
+</section>
+
+<section id="refused" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Refusals</p><h2>What the wallets refused</h2></div>
+      <div><p>A refused payment leaves no event: the wallet never produces a valid signature, so there is nothing to send. These come from the run's own record, with the reason the wallet gave.</p></div>
+    </div>
+    <div class="table-wrap" id="refusedWrap" hidden>
+      <table>
+        <thead><tr><th>Wallet</th><th>Endpoint</th><th>Outcome</th></tr></thead>
+        <tbody id="refusedBody"></tbody>
+      </table>
+    </div>
+    <p class="muted" id="refusedNote"></p>
+  </div>
+</section>
+
+<section id="contracts">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Contracts</p><h2>Deployed in the latest run</h2></div>
+      <div><p>Each one is built in the open workflow with its source repository in the contract meta and a GitHub build attestation (SEP-55), so an explorer can link the deployed code to the commit it came from.</p></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Contract</th><th>What it does</th><th>Address</th></tr></thead>
+        <tbody id="contractsBody"><tr><td colspan="3" class="loading">Loading…</td></tr></tbody>
+      </table>
+    </div>
+    <p class="muted">Source, tests and the full report of each run: <a href="https://github.com/arturete58-sys/402scope-trust/blob/main/docs/testnet/README.md" target="_blank" rel="noopener">docs/testnet</a> in the open-source repository.</p>
+  </div>
+</section>
+<script src="/vendor/stellar-sdk-16.3.1.min.js" defer></script>
