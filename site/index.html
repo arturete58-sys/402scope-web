@@ -253,6 +253,21 @@ if (check.providerAtFault) { /* skip or credit the charge */ }</pre>
     "args": ["-y", "github:arturete58-sys/402scope-trust", "mcp"] } } }</pre>
       </div>
       <div class="card">
+        <span class="num-badge">Agent wallets on Stellar</span>
+        <h3>Who and how much, enforced by the wallet</h3>
+        <p>A smart-account wallet for agents with two policies on every payment: pay only sellers the chosen attesters trust, and no more than a daily budget. The owner changes the budget with a passkey; the agent key can only pay. Running daily on testnet.</p>
+        <a class="more" href="/live/">See it onchain</a>
+      </div>
+      <div class="card">
+        <span class="num-badge">Python</span>
+        <h3>Verify receipts and attestations in Python</h3>
+        <p>Check a seller’s signed delivery receipt (SEP-53) and ask the onchain attesters, with the Stellar Python SDK.</p>
+<pre>pip install "git+https://github.com/arturete58-sys/402scope-trust#subdirectory=python"
+
+from scope_trust import decode_receipt, verify_receipt
+verify_receipt(decode_receipt(hdr), payment, body, pay_to)</pre>
+      </div>
+      <div class="card">
         <span class="num-badge">Sellers</span>
         <h3>Show your measurement</h3>
         <p>A live badge for your README or website, linked to your full record. Free, and it cannot be bought.</p>

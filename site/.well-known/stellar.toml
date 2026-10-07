@@ -8,6 +8,11 @@ NETWORK_PASSPHRASE = "Public Global Stellar Network ; September 2015"
 # so the link can be checked both ways (see 402scope-trust: attesterIdentity).
 # ACCOUNTS = []
 
+# SEP-10 login for partner facilitators (402scope-trust API). Enabled once the
+# server signing key is set (TRUST_SEP10_SECRET); its public key goes here.
+# WEB_AUTH_ENDPOINT = "https://402scope.org/v1/auth"
+# SIGNING_KEY = "G..."
+
 [DOCUMENTATION]
 ORG_NAME = "402Scope"
 ORG_URL = "https://402scope.org"
