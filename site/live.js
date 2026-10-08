@@ -39,6 +39,7 @@
     ['budgetWallet', 'Budgeted agent wallet', 'Smart account with the trust policy and a daily spending limit'],
     ['verifier', 'Ed25519 verifier', 'Checks the agent key’s signatures for both wallets'],
     ['webauthnVerifier', 'Passkey verifier', 'Checks the owner’s passkey (WebAuthn) signatures'],
+    ['escrow', 'Escrow', 'x402 scheme escrow: payments held until delivery is shown, settled in seconds. No admin'],
     ['refundBond', 'Refund bond', 'Optional seller bonds; refunds payers when a seller\u2019s signed receipt shows a breach. No admin'],
     ['token', 'SCOPE test token', 'SEP-41 token the demo pays and bonds in'],
   ];
@@ -72,6 +73,12 @@
       if (b === 'refund') return ['payment', 'Refunded', `${who(t[3])} refunded ${amount(v.amount)}: the seller\u2019s own receipt showed it broke its terms`];
       if (b === 'unlock') return ['bond', 'Bond withdrawal requested', `${amount(v.amount)}, after the notice period`];
       if (b === 'withdraw') return ['bond', 'Bond withdrawn', `${amount(v.amount)}`];
+    }
+    if (a === 'scope_escrow') {
+      if (b === 'paid') return ['payment', 'Paid into escrow', `${who(v.payer)} → held for ${who(v.seller)} · ${amount(v.amount)}`];
+      if (b === 'released') return ['payment', 'Escrow released', `${who(v.seller)} paid ${amount(v.amount)} · ${['the buyer confirmed', 'bonded seller', 'after the contest window'][v.how] ?? ''}`];
+      if (b === 'refunded') return ['payment', 'Escrow refunded', `${who(v.payer)} refunded ${amount(v.amount)} · ${['the seller\u2019s receipt showed a breach', 'no receipt by the deadline'][v.why] ?? ''}`];
+      if (b === 'delivered') return ['policy', 'Receipt posted', 'released after the contest window unless contested'];
     }
     if (a === 'transfer') return ['payment', 'Payment', `${who(t[1])} → ${who(t[2])} · ${amount(v)}`];
     if (a === 'mint') return ['setup', 'Funded', `${who(t.length > 3 ? t[2] : t[1])} · ${amount(v)}`];
@@ -110,7 +117,7 @@
     const server = new sdk.rpc.Server(RPC);
     const health = await server.getHealth();
     const c = latest.contracts || {};
-    const ours = ['registry', 'policy', 'spendingLimit', 'wallet', 'refundBond'].map((k) => c[k]).filter(Boolean);
+    const ours = ['registry', 'policy', 'spendingLimit', 'refundBond', 'escrow'].map((k) => c[k]).filter(Boolean);
     const filters = [{ type: 'contract', contractIds: ours.slice(0, 5) }];
     if (c.token) filters.push({ type: 'contract', contractIds: [c.token] });
     // Start shortly before the run (ledgers close every ~5-6 s; 5 s errs on the early side),

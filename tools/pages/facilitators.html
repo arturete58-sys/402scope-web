@@ -1,4 +1,4 @@
-<!-- title: For facilitators · 402Scope | description: A verdict on every x402 payment you settle, a Bazaar ranked by what actually works, alerts when a seller degrades, and optional automatic refunds. One call, open source. -->
+<!-- title: For facilitators · 402Scope | description: A verdict on every x402 payment you settle, a Bazaar ranked by what actually works, alerts when a seller degrades, and optional refunds and escrow settled in seconds. One call, open source. -->
 <div class="page-hero">
   <div class="wrap">
     <span class="eyebrow">For facilitators</span>
@@ -36,9 +36,9 @@
       </div>
       <div class="card">
         <span class="num-badge">04 · Optional</span>
-        <h3>Refunds when a seller breaks its own terms</h3>
-        <p>Sellers can back their terms with a bond. If a response breaks what the seller declared, its own signed receipt is the proof and the buyer is refunded on Stellar, at once. You show those sellers first.</p>
-        <a class="more" href="#refunds">How refunds work</a>
+        <h3>Refunds and escrow, settled in seconds</h3>
+        <p>Offer buyers protection on Stellar: sellers can back their terms with a bond, or take payments through escrow, held until delivery is shown. A good delivery pays the seller in seconds; a broken promise refunds the buyer in seconds.</p>
+        <a class="more" href="#refunds">How it works</a>
       </div>
     </div>
   </div>
@@ -69,28 +69,34 @@ const listing = await scope.rank(bazaarItems);   // trusted and refund-backed se
 <section id="refunds">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="kicker">Optional refunds</p><h2>Refunded by a signature, not by a support ticket</h2></div>
+      <div><p class="kicker">Optional protection</p><h2>Refunded by a signature, not by a support ticket</h2></div>
       <div>
-        <p>A seller that opts in locks a bond in a contract on Stellar. Each paid response carries the seller’s signed receipt: what it delivered, how old the data was, and the maximum age it promised.</p>
-        <p>If the receipt shows the seller broke its own terms, the buyer’s client submits it and the contract refunds the payer in the same transaction. Nobody decides: the rule only reads what the seller signed.</p>
+        <p>Every paid response carries the seller’s signed receipt: what it delivered, how old the data was, and the maximum age it promised. When the receipt shows the seller broke its own terms, a contract on Stellar refunds the buyer. Nobody decides: the rule only reads what the seller signed.</p>
+        <p>Two ways, both optional, both on contracts with no admin. 402Scope holds no funds and decides no refund.</p>
       </div>
     </div>
-    <div class="grid-3">
+    <div class="grid-2">
       <div class="card">
-        <span class="num-badge">Seller</span>
-        <h3>Opts in, or not</h3>
-        <p>A bond of a few dollars covers thousands of calls. It stays the seller’s: withdrawable after a notice period, lost only to its own broken promises.</p>
+        <span class="num-badge">Refund bond</span>
+        <h3>The seller backs its terms with a deposit</h3>
+        <p>Payments stay ordinary <code>exact</code> payments, through any facilitator. If a response breaks the seller’s terms, the buyer is refunded from the bond at once. A bond of a few dollars covers thousands of calls and stays the seller’s.</p>
       </div>
       <div class="card">
-        <span class="num-badge">Buyer</span>
-        <h3>Gets the money back at once</h3>
-        <p>The agent’s client checks every paid response and claims automatically. The refund goes to the payer named in the seller’s own receipt.</p>
+        <span class="num-badge">Escrow</span>
+        <h3>The payment waits for the delivery</h3>
+        <p>The buyer pays a contract instead of the seller. The data arrives at once; the money waits seconds. The buyer’s agent confirms a good response and the seller is paid in the next ledger; a broken promise is refunded just as fast. No receipt at all: refunded at the deadline.</p>
       </div>
-      <div class="card">
-        <span class="num-badge">Nobody else</span>
-        <h3>No one holds the funds</h3>
-        <p>The contract has no admin. 402Scope publishes the code and counts refunds in its fault rates; it holds no money and decides no refund.</p>
-      </div>
+    </div>
+    <div class="table-wrap" style="margin-top:16px">
+      <table>
+        <thead><tr><th>What happens</th><th>Result</th><th>When</th></tr></thead>
+        <tbody>
+          <tr><td>The agent checks the response and confirms</td><td>Seller paid</td><td class="num">≈ 5 s</td></tr>
+          <tr><td>The seller’s receipt shows a breach of its terms</td><td>Buyer refunded</td><td class="num">≈ 5 s</td></tr>
+          <tr><td>A bonded seller posts its receipt</td><td>Seller paid</td><td class="num">≈ 5 s</td></tr>
+          <tr><td>No confirmation and no receipt</td><td>Buyer refunded</td><td class="num">at the deadline</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
@@ -109,6 +115,7 @@ const listing = await scope.rank(bazaarItems);   // trusted and refund-backed se
           <tr><td>OpenZeppelin’s hosted facilitator</td><td>Agent wallets and classic accounts paid through it, in testnet USDC</td></tr>
           <tr><td>Fermah Pay (prepaid, <code>batch-settlement</code>)</td><td>The seller role of its ledger contract read onchain, so receipts from its sellers count</td></tr>
           <tr><td>The refund bond</td><td>A seller that served 20-minute-old data after promising under 60 seconds refunded the agent automatically</td></tr>
+          <tr><td>Escrow</td><td>The agent confirmed a good response and the seller was paid in seconds; a stale one was refunded in seconds</td></tr>
         </tbody>
       </table>
     </div>
