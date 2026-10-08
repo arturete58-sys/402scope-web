@@ -257,3 +257,4 @@ td.ep a { text-decoration: none; } td.ep a:hover { text-decoration: underline; }
 .wallet-sign { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin-top: 16px; }
 .wallet-sign .muted { margin: 0; flex: 1 1 320px; }
 #walletOut { margin-top: 8px; }
+.roles .card pre { margin-top: 8px; font-size: 12.5px; white-space: pre-wrap; word-break: break-word; }

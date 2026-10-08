@@ -1,0 +1,129 @@
+<!-- title: For facilitators · 402Scope | description: A verdict on every x402 payment you settle, a Bazaar ranked by what actually works, alerts when a seller degrades, and optional automatic refunds. One call, open source. -->
+<div class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">For facilitators</span>
+    <h1>You settle every payment. Know what it paid for.</h1>
+    <p class="lede">A facilitator verifies and settles x402 payments but never sees the response the buyer paid for. 402Scope measures it independently, by buying, and puts the result where your payments are decided.</p>
+    <p class="lede"><strong>One call</strong> adds it to a standard x402 facilitator. Nothing in your payment path depends on us: if 402Scope is unreachable, payments go through.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#install">Add it in one call</a>
+      <a class="btn btn-ghost" href="https://github.com/arturete58-sys/402scope-trust/blob/main/docs/facilitators.md" target="_blank" rel="noopener">Read the docs</a>
+    </div>
+  </div>
+</div>
+
+<section id="gain">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">What you get</p><h2>Four things a facilitator cannot see on its own</h2></div>
+      <div><p>Each one works alone. Together they turn your facilitator into the one buyers and agents prefer to pay through.</p></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <span class="num-badge">01 · Every payment</span>
+        <h3>A verdict on the seller, at verify and settle</h3>
+        <p>Before you verify or settle, the seller behind the <code>payTo</code> is checked against independent measurements. Flag it for your logs, or block it. Works for <code>exact</code> payments and for prepaid <code>batch-settlement</code> ledgers.</p>
+      </div>
+      <div class="card">
+        <span class="num-badge">02 · Your catalogue</span>
+        <h3>A Bazaar ranked by what actually works</h3>
+        <p>Your discovery listing comes back with each seller’s measured score, trusted sellers first. Put it in front of your existing Bazaar with no change to it.</p>
+      </div>
+      <div class="card">
+        <span class="num-badge">03 · Before your users notice</span>
+        <h3>Alerts when a seller degrades</h3>
+        <p>Watch the sellers in your network and get a callback when one crosses the fault bound you choose. Share what you settle, opt-in, and it gets measured too.</p>
+      </div>
+      <div class="card">
+        <span class="num-badge">04 · Optional</span>
+        <h3>Refunds when a seller breaks its own terms</h3>
+        <p>Sellers can back their terms with a bond. If a response breaks what the seller declared, its own signed receipt is the proof and the buyer is refunded on Stellar, at once. You show those sellers first.</p>
+        <a class="more" href="#refunds">How refunds work</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="install" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Install</p><h2>One call on your facilitator</h2></div>
+      <div><p>For any facilitator built on the official <code>@x402/core</code>. Open source, Apache 2.0. No key needed to start.</p></div>
+    </div>
+<pre>npm install github:arturete58-sys/402scope-trust
+
+import { scopeFacilitator } from '402scope-trust/facilitator';
+
+const scope = scopeFacilitator(facilitator, {
+  trust: { chain },        // onchain attesters on Stellar, or { apiUrl }, or your own checker
+  mode: 'flag',            // 'block' refuses sellers that are not trusted
+  share: { apiUrl, key },  // optional: get what you settle measured
+  refunds: { contract, rpcUrl, networkPassphrase, token },  // optional: label refund-backed sellers
+});
+
+const listing = await scope.rank(bazaarItems);   // trusted and refund-backed sellers first</pre>
+    <p class="muted">Facilitators written in another language call the same checks over HTTP. The open-source API also accepts a login with the facilitator’s Stellar account (SEP-10) instead of a shared key.</p>
+  </div>
+</section>
+
+<section id="refunds">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Optional refunds</p><h2>Refunded by a signature, not by a support ticket</h2></div>
+      <div>
+        <p>A seller that opts in locks a bond in a contract on Stellar. Each paid response carries the seller’s signed receipt: what it delivered, how old the data was, and the maximum age it promised.</p>
+        <p>If the receipt shows the seller broke its own terms, the buyer’s client submits it and the contract refunds the payer in the same transaction. Nobody decides: the rule only reads what the seller signed.</p>
+      </div>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <span class="num-badge">Seller</span>
+        <h3>Opts in, or not</h3>
+        <p>A bond of a few dollars covers thousands of calls. It stays the seller’s: withdrawable after a notice period, lost only to its own broken promises.</p>
+      </div>
+      <div class="card">
+        <span class="num-badge">Buyer</span>
+        <h3>Gets the money back at once</h3>
+        <p>The agent’s client checks every paid response and claims automatically. The refund goes to the payer named in the seller’s own receipt.</p>
+      </div>
+      <div class="card">
+        <span class="num-badge">Nobody else</span>
+        <h3>No one holds the funds</h3>
+        <p>The contract has no admin. 402Scope publishes the code and counts refunds in its fault rates; it holds no money and decides no refund.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proof" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Proven</p><h2>Running on Stellar testnet, every day</h2></div>
+      <div><p>An open workflow runs the whole flow with real testnet payments and publishes every transaction. Watch it on the <a href="/live/">live page</a>.</p></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>With</th><th>What was checked</th></tr></thead>
+        <tbody>
+          <tr><td>A standard <code>@x402/core</code> facilitator</td><td>Trust hooks blocked a payment to a seller that broke its own terms; the Bazaar listing came back ranked</td></tr>
+          <tr><td>OpenZeppelin’s hosted facilitator</td><td>Agent wallets and classic accounts paid through it, in testnet USDC</td></tr>
+          <tr><td>Fermah Pay (prepaid, <code>batch-settlement</code>)</td><td>The seller role of its ledger contract read onchain, so receipts from its sellers count</td></tr>
+          <tr><td>The refund bond</td><td>A seller that served 20-minute-old data after promising under 60 seconds refunded the agent automatically</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted"><a href="https://github.com/arturete58-sys/402scope-trust/blob/main/docs/testnet/README.md" target="_blank" rel="noopener">Latest run report</a> · <a href="https://github.com/arturete58-sys/402scope-trust" target="_blank" rel="noopener">Source</a></p>
+  </div>
+</section>
+
+<section id="independence">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Independence</p><h2>Scores are not for sale</h2></div>
+      <div>
+        <p>No seller and no facilitator pays for a measurement, a score or a change to one. What a facilitator can pay for is service around it: alert volume, API limits, reports on its network, support.</p>
+        <p>Talk to us: <strong>hello@402scope.org</strong></p>
+      </div>
+    </div>
+  </div>
+</section>

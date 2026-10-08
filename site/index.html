@@ -27,6 +27,7 @@
   <div class="wrap">
     <a class="brand" href="#top" aria-label="402Scope, top of page"><span class="brand-mark" aria-hidden="true">402</span>402Scope</a>
     <nav class="nav" aria-label="Sections">
+      <a href="/facilitators/">Facilitators</a>
       <a href="#measurement">Measurement</a>
       <a href="#trust">Trust</a>
       <a href="#declarations">Declarations</a>
@@ -56,8 +57,11 @@
     <h1>Does an x402 seller deliver what it declares?</h1>
     <p class="lede">Most x402 measurement counts transactions. 402Scope <strong>buys the resource</strong> and checks whether what arrived matches what the provider said it would deliver.</p>
     <p class="lede">Four chains, one method. Raw data published with SHA-256 hashes, every observation signed, every correction published.</p>
+    <p class="lede"><strong>For facilitators:</strong> a verdict on every payment you settle, a Bazaar ranked by what actually works, and optional refunds when a seller breaks its own terms.</p>
     <div class="cta">
-      <a class="btn btn-primary" href="#check">Check your endpoint
+      <a class="btn btn-primary" href="/facilitators/">For facilitators
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn btn-ghost" href="#check">Check your endpoint
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       <a class="btn btn-ghost" href="https://github.com/arturete58-sys" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7 3 12l5 5"/><path d="m16 7 5 5-5 5"/><path d="m14 4-4 16"/></svg>
@@ -216,10 +220,34 @@ X-402-Receipt:     signed by the payTo key,
 <section id="build">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="kicker">Build with it</p><h2>Start in one minute</h2></div>
-      <div><p>Everything below works today, without a key or registration, from an agent, a wallet, a facilitator or a seller’s own site.</p></div>
+      <div><p class="kicker">Build with it</p><h2>One package, three roles</h2></div>
+      <div><p>One open-source package, with one call for each side of a payment. Everything below works today, without a key or registration.</p></div>
     </div>
-    <div class="grid-2">
+    <div class="grid-3 roles">
+      <div class="card">
+        <span class="num-badge">Facilitators</span>
+        <h3>Know what your payments paid for</h3>
+        <p>A verdict on every payment you verify and settle, flagged or blocked; your Bazaar ranked by measured quality; refund-backed sellers first.</p>
+<pre>scopeFacilitator(facilitator, { trust, mode: 'flag' })</pre>
+        <a class="more" href="/facilitators/">For facilitators</a>
+      </div>
+      <div class="card">
+        <span class="num-badge">Sellers</span>
+        <h3>Show what you deliver</h3>
+        <p>Your delivery terms in the 402 challenge, a signed receipt with every paid response, a live badge, and an optional refund bond that makes buyers prefer you.</p>
+<pre>const scope = scopeSeller({ secret, terms })
+app.use(...scope.middleware)</pre>
+        <a class="more" href="/badges/">Make your badge</a>
+      </div>
+      <div class="card">
+        <span class="num-badge">Buyers and agents</span>
+        <h3>Pay only for what works</h3>
+        <p>A check before paying, a check of what arrived after paying, and automatic refunds from sellers that offer them. Also as an MCP tool and in Python.</p>
+<pre>const pay = scopeFetch({ client, refunds })</pre>
+        <a class="more" href="#api">Or ask the API</a>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top:16px">
       <div class="card">
         <span class="num-badge">Agents</span>
         <h3>Ask before you pay</h3>
@@ -227,27 +255,9 @@ X-402-Receipt:     signed by the payTo key,
 <pre>curl "https://402scope.org/v1/provider?endpoint=https://api.example.com/x"</pre>
       </div>
       <div class="card">
-        <span class="num-badge">Wallets and catalogues</span>
-        <h3>Check a whole catalogue</h3>
-        <p>Up to 50 endpoints in one request, counted as one against the rate limit.</p>
-<pre>curl -X POST https://402scope.org/v1/providers \
-  -H 'content-type: application/json' \
-  -d '{"endpoints":["https://a.example/x","https://b.example/y"]}'</pre>
-      </div>
-      <div class="card">
-        <span class="num-badge">Buyers</span>
-        <h3>Read what the seller declares</h3>
-        <p>Normalise freshness, quality and provenance from any provider, and know whether a bad response is the provider’s fault.</p>
-<pre>npm install x402-declarations
-
-const { normalize, isUsable } = require('x402-declarations');
-const check = isUsable(normalize(url, body), { maxAgeSeconds: 60 });
-if (check.providerAtFault) { /* skip or credit the charge */ }</pre>
-      </div>
-      <div class="card">
         <span class="num-badge">Agent tools</span>
         <h3>An MCP tool for your agent</h3>
-        <p>Add it to Claude, Cursor or any MCP client. <code>observatory_decision</code> returns sell, sell and warn or hold from the observatory’s measurements, on your thresholds; <code>check_before_pay</code> adds the onchain attestations on Stellar.</p>
+        <p>Add it to Claude, Cursor or any MCP client. <code>observatory_decision</code> returns sell, sell and warn or hold from the observatory’s measurements, on your thresholds.</p>
 <pre>{ "mcpServers": { "402scope": {
     "command": "npx",
     "args": ["-y", "github:arturete58-sys/402scope-trust", "mcp"] } } }</pre>
@@ -255,29 +265,13 @@ if (check.providerAtFault) { /* skip or credit the charge */ }</pre>
       <div class="card">
         <span class="num-badge">Agent wallets on Stellar</span>
         <h3>Who and how much, enforced by the wallet</h3>
-        <p>A smart-account wallet for agents with two policies on every payment: pay only sellers the chosen attesters trust, and no more than a daily budget. The owner changes the budget with a passkey; the agent key can only pay. Running daily on testnet.</p>
+        <p>A smart-account wallet that pays only sellers the chosen attesters trust, within a daily budget, managed by the owner’s passkey.</p>
         <a class="more" href="/live/">See it onchain</a>
       </div>
       <div class="card">
         <span class="num-badge">Python</span>
         <h3>Verify receipts and attestations in Python</h3>
-        <p>Check a seller’s signed delivery receipt (SEP-53) and ask the onchain attesters, with the Stellar Python SDK.</p>
-<pre>pip install "git+https://github.com/arturete58-sys/402scope-trust#subdirectory=python"
-
-from scope_trust import decode_receipt, verify_receipt
-verify_receipt(decode_receipt(hdr), payment, body, pay_to)</pre>
-      </div>
-      <div class="card">
-        <span class="num-badge">Sellers</span>
-        <h3>Show your measurement</h3>
-        <p>A live badge for your README or website, linked to your full record. Free, and it cannot be bought.</p>
-        <a class="more" href="/badges/">Make your badge</a>
-      </div>
-      <div class="card">
-        <span class="num-badge">Facilitators and settlement layers</span>
-        <h3>Get told when a provider degrades</h3>
-        <p>Register a watch on an endpoint and a bound; you get a callback when it crosses. Facilitators can also contribute counts and their Bazaar listing. Ask for a reporter key at hello@402scope.org.</p>
-<pre>POST /v1/watch   {"endpoint": "...", "boundAbove": 0.15, "callbackUrl": "..."}</pre>
+<pre>pip install "git+https://github.com/arturete58-sys/402scope-trust#subdirectory=python"</pre>
       </div>
     </div>
   </div>

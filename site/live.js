@@ -39,6 +39,7 @@
     ['budgetWallet', 'Budgeted agent wallet', 'Smart account with the trust policy and a daily spending limit'],
     ['verifier', 'Ed25519 verifier', 'Checks the agent key’s signatures for both wallets'],
     ['webauthnVerifier', 'Passkey verifier', 'Checks the owner’s passkey (WebAuthn) signatures'],
+    ['refundBond', 'Refund bond', 'Optional seller bonds; refunds payers when a seller\u2019s signed receipt shows a breach. No admin'],
     ['token', 'SCOPE test token', 'SEP-41 token the demo pays and bonds in'],
   ];
   const ACCOUNTS = {
@@ -65,6 +66,12 @@
       if (b === 'installed') return ['policy', 'Budget set', `${who(t[2])}: at most ${amount(v.spending_limit)} per ${Number(v.period_ledgers).toLocaleString('en')} ledgers (about ${Math.round(v.period_ledgers / 720)} h)`];
       if (b === 'changed') return ['policy', 'Budget changed', `${who(t[2])}: at most ${amount(v.spending_limit)} now, signed by the owner`];
       if (b === 'uninstalled') return ['policy', 'Budget removed', `${who(t[2])}`];
+    }
+    if (a === 'scope_bond') {
+      if (b === 'deposit') return ['bond', 'Refund bond', `a seller backs its terms: ${amount(v.balance)} in bond`];
+      if (b === 'refund') return ['payment', 'Refunded', `${who(t[3])} refunded ${amount(v.amount)}: the seller\u2019s own receipt showed it broke its terms`];
+      if (b === 'unlock') return ['bond', 'Bond withdrawal requested', `${amount(v.amount)}, after the notice period`];
+      if (b === 'withdraw') return ['bond', 'Bond withdrawn', `${amount(v.amount)}`];
     }
     if (a === 'transfer') return ['payment', 'Payment', `${who(t[1])} → ${who(t[2])} · ${amount(v)}`];
     if (a === 'mint') return ['setup', 'Funded', `${who(t.length > 3 ? t[2] : t[1])} · ${amount(v)}`];
@@ -103,7 +110,7 @@
     const server = new sdk.rpc.Server(RPC);
     const health = await server.getHealth();
     const c = latest.contracts || {};
-    const ours = ['registry', 'policy', 'spendingLimit', 'wallet', 'budgetWallet'].map((k) => c[k]).filter(Boolean);
+    const ours = ['registry', 'policy', 'spendingLimit', 'wallet', 'refundBond'].map((k) => c[k]).filter(Boolean);
     const filters = [{ type: 'contract', contractIds: ours.slice(0, 5) }];
     if (c.token) filters.push({ type: 'contract', contractIds: [c.token] });
     // Start shortly before the run (ledgers close every ~5-6 s; 5 s errs on the early side),
